@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title class="header">Booking Form</title>
+
+    <script src="scripts.js"></script>
+    <link href="styles.css" rel="stylesheet"/>
+</head>
+<body>
+    <header>
+    
+    <div class="header">
+        <img src="Images/map.png" alt="Travel Map" class="header-img">
+        <h1 class="header-title">Booking Form</h1>
+    </div>
+      <p>Welcome to our online<strong> Booking Service!</strong> Please fill out the following form to confirm your booking.</p>
+    </header>
+
+    <section>
+        <h2>Book Your Flight</h2>
+<form id="bookingForm" action="#" method="POST" >
+
+   <div>
+    <label for="departurecity">
+    <img src="Images/City.png" alt="City Icon" class="icon"> 
+       Departure City
+    </label><br>
+    <input type="text" id="departurecity" name="departurecity" placeholder="Enter Departure City" required><br><br>
+
+    <label for="dest">
+    <img src="./Images/destination.png" alt="Destination Icon" class="icon">
+      Destination
+      </label><br>
+    
+    <select id= "dest" name="dest" required>
+     <option value="">Select Destination</option>
+     <option value="Paris">Paris</option>
+     <option value="Tokyo">Tokyo</option>
+     <option value="Rome">Rome</option>
+     <option value="Bangkok">Bangkok</option>
+    </select><br><br>
+    </div>
+
+   <div>
+     <label for="depdate">
+     <img src="Images/Date.png" alt="Date Icon" class="icon">Departure Date</label><br>
+     <input type="date" id="depdate" name="depdate" required><br><br>
+   </div>
+
+    <div>
+     <label for="returndate">
+     <img src="Images/Date.png" alt="Date Icon" class="icon">Return Date</label><br>
+      <input type="date" id="returndate" name="returndate"><br><br>
+    </div>
+
+    <div>
+     <label for="passengers">
+     <img src="Images/Passengers.png" alt="Passengers Icon" class="icon">Number of Passengers</label><br>
+     <input type="number" id="passengers" name="passengers" placeholder="Enter Number of Passengers" min="1" required><br><br>
+    </div>
+
+  <div>
+     <label for="triptype">
+     <img src="Images/Trip_Type.png" alt="Trip Type Icon" class="icon">Trip Type</label><br>
+  
+     <label for="roundtrip">Round Trip</label>
+     <input type="radio" id="roundtrip" name="triptype" value="roundtrip" required>
+
+     <label for="oneway">One Way</label>
+     <input type="radio" id="oneway" name="triptype" value="oneway" required>
+     <br><br>
+  </div>
+
+  <div>
+    <label for="specialneeds">
+     <img src="Images/Special_Needs.png" alt="Special Needs Icon" class="icon">Any Special Needs?</label><br>
+     <textarea id="specialneeds" name="specialneeds" rows="4" placeholder="For example, wheelchair or any special requests"></textarea>
+  </div>
+  <br>
+     <button type="submit">Confirm Booking</button>
+     
+</form>
+    </section>
+     <hr>
+    <footer>
+        <p>&copy; 2025 All rights reserved</p>
+    </footer>
+
+<script>
+  
+   var url = window.location.href;
+  
+   if (url.indexOf("?destination=") > -1) {
+   
+    var params = url.split("?destination=")[1];
+    var destinationName = params;
+    
+    var destSelect = document.getElementById("dest");
+    destSelect.value = destinationName;
+   }
+  
+  document.getElementById("bookingForm").addEventListener("submit", function(event){
+   event.preventDefault();
+   
+   var departureCity= document.getElementById("departurecity").value.trim();
+   var destination= document.getElementById("dest").value.trim();
+   var depDate= document.getElementById("depdate").value;
+   var returnDate = document.getElementById("returndate").value;
+   var passengers = document.getElementById("passengers").value;
+   var tripType = document.querySelector('input[name="triptype"]:checked');
+  
+   
+   if(departureCity===""||destination===""||depDate===""||passengers===""||!tripType){
+    alert("Please fill in all required fields before submitting.");
+    return;
+   }
+   
+   var today= new Date();
+   var dep= new Date(depDate);
+   if(dep<today){
+   alert("Departure date cannot be in the past!");
+    return;
+   }
+   
+   if(returnDate!==""){
+    var ret= new Date(returnDate);
+    if(ret<dep){
+     alert("Return date must be after the departure date!");
+     return;
+    }
+   }
+   
+   alert("Booking confirmed! We'll contact you soon.");
+   
+   window.location.href = "Reviews.html";
+  
+   
+  });
+  
+ </script>
+</body>
+</html>

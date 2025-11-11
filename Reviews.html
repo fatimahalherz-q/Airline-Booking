@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reviews</title>
+  <link rel="stylesheet" href="styles2.css" />
+</head>
+<body>
+  <nav>
+    <div class="logo"></div>
+    <ul>
+      <li><a href="HomePage.html">Home</a></li>
+      <li><a href="Destination.html">Destinations</a></li>
+      <li><a href="BookingPage.html">Booking</a></li>
+      <li><a href="Reviews.html" class="active">Reviews</a></li>
+      <li><a href="loginpage.html">Login</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <div id="msgBox" class="error"></div>
+
+    <form id="revForm">
+      <div>
+        <label for="tname">Name:</label>
+        <input type="text" id="tname" placeholder="Enter your name">
+      </div>
+
+      <div>
+        <label for="trate">Rating (1 to 5)</label>
+        <input type="number" id="trate" min="1" max="5" value="5">
+      </div>
+
+      <div>
+        <label for="tcomment">Comment:</label>
+        <textarea id="tcomment" placeholder="Tell us about your trip"></textarea>
+      </div>
+
+      <button type="submit">Submit Review</button>
+    </form>
+
+    <h3>All Reviews:</h3>
+    <div id="revList">
+      <p class="no-reviews">No reviews yet...</p>
+    </div>
+  </div>
+
+  <script>
+  var form   = document.getElementById("revForm");
+  var tname  = document.getElementById("tname");
+  var trate  = document.getElementById("trate");
+  var tcomment = document.getElementById("tcomment");
+  var msgBox = document.getElementById("msgBox");
+  var revList = document.getElementById("revList");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    var n    = tname.value;
+    var rate = trate.value;
+    var c    = tcomment.value;
+
+    msgBox.textContent = "";
+    msgBox.style.color = "red";
+
+    if (n === "" || c === "" || rate === "") {
+      msgBox.textContent = "Please fill in all fields.";
+      return;
+    }
+
+    if (rate < 1 || rate > 5) {
+      msgBox.textContent = "Rating must be between 1 and 5.";
+      return;
+    }
+
+    if (revList.firstElementChild &&
+        revList.firstElementChild.className === "no-reviews") {
+      revList.innerHTML = "";
+    }
+
+    var card = document.createElement("div");
+    card.className = "review-card";
+
+    var title = document.createElement("p");
+    title.textContent = n + " (Rating: " + rate + "/5)";
+
+    var text = document.createElement("p");
+    text.textContent = c;
+
+    card.appendChild(title);
+    card.appendChild(text);
+    revList.appendChild(card);
+
+    tname.value = "";
+    trate.value = 5;
+    tcomment.value = "";
+
+    msgBox.style.color = "green";
+    msgBox.textContent = "Review added successfully.";
+  });
+</script>
+</body>
+</html>
